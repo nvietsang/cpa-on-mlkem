@@ -272,7 +272,7 @@ class ML_KEM:
         for i in range(self.k):
             s[i] = self.sample_poly_cbd(self.eta1, self.prf(self.eta1, sig, n))
             n   += 1
-        print('# s:', s)
+        # print('# s:', s)
         e   = [None]*self.k
         for i in range(self.k):
             e[i] = self.sample_poly_cbd(self.eta1, self.prf(self.eta1, sig, n))
