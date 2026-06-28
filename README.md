@@ -13,3 +13,7 @@ The attack point is the multiplication between the secret key and the ciphertext
 ## Key recovery
 
 Run the notebook `recover.ipynb`.
+
+## References
+
+`fips203.py` is from [https://github.com/mjosaarinen/py-acvp-pqc](https://github.com/mjosaarinen/py-acvp-pqc)
