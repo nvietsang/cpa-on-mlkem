@@ -14,6 +14,12 @@ The attack point is the multiplication between the secret key and the ciphertext
 
 Run the notebook `recover.ipynb`.
 
+## Open problem (TODO)
+
+When using the output of the `base_case_multiply` function as the intermediate value, the recovery algorithm must guess 2 coefficients at a time, resulting in $3329^2$ possibilities. This approach is impractical on a classical computer.
+
+To reduce the complexity, we instead target the multiplication operation `a_0 * b_0` within the `base_case_multiply` function. In this case, only a single coefficient needs to be guessed. However, this introduces a new issue: multiple key guesses produce the same correlation with the power traces. As a result, an additional post-processing step is required to resolve these ambiguities.
+
 ## References
 
 `fips203.py` is from [https://github.com/mjosaarinen/py-acvp-pqc](https://github.com/mjosaarinen/py-acvp-pqc)
