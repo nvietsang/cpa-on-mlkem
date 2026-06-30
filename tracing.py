@@ -4,16 +4,14 @@ import numpy as np
 import argparse
 from fips203 import ML_KEM
 
-NOISE_STDDEV = 0
-
-
-
 class TracedInt:
 
     # class-level trigger
     is_recording = False
     trace_buffer        = []
     intermediate_buffer = []
+    # Noise
+    noise_stddev = 0
 
     def __init__(self, value: int):
         if not isinstance(value, int): raise TypeError("Expected int")
@@ -22,7 +20,7 @@ class TracedInt:
     def _record_leakage(self, value):
         if TracedInt.is_recording:
             hw = bin(value).count('1')
-            noise = random.gauss(0, NOISE_STDDEV)
+            noise = random.gauss(0, TracedInt.noise_stddev)
             TracedInt.trace_buffer.append(hw + noise)
 
     def __add__(self, other):
@@ -168,6 +166,11 @@ class Tainted_ML_KEM(ML_KEM):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
+    parser.add_argument("--noise",
+                        dest="noise_stddev",
+                        help="Noise level",
+                        type=float,
+                        required=True)
     parser.add_argument("--n-traces",
                         dest="n_traces",
                         help="Number of traces",
@@ -186,6 +189,8 @@ if __name__ == "__main__":
     
     config = parser.parse_args()
 
+    # Set noise level
+    TracedInt.noise_stddev = config.noise_stddev
     # Reference ML-KEM to generate key
     mlkem0 = ML_KEM(config.mlkem_variant)
     # Tainted ML-KEM to record traces

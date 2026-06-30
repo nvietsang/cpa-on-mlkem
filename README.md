@@ -8,7 +8,7 @@ The attack point is the multiplication between the secret key and the ciphertext
 
 ## Trace collection
 
-    python3 tracing.py --n-traces 50 --path-to-data data
+    python3 tracing.py --noise 0.95 --n-traces 200 --path-to-data data
 
 ## Key recovery
 
